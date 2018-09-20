@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="format-detection" content="telephone=yes"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>mooncake</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        var w, h, l, t,f;
+        $(function(){
+            var bodyWith=$(document.body).width();
+            w=360*bodyWith/398;
+            h=540*bodyWith/398;
+            l=55*bodyWith/398;
+            t=120*bodyWith/398;
+            f=30*bodyWith/398;
+            $("#myCanvas").attr("width",w);
+            $("#myCanvas").attr("height",h);
+        })
+        function submitClick() {
+            var name = $("#name").val();
+            var birthday = $("#birthday").val();
+            if (name == undefined || name == "" || name == null) {
+                alert("姓名不能为空");
+                return;
+            }
+            if (birthday == undefined || birthday == "" || birthday == null) {
+                alert("请输入生日");
+                return;
+            }
+            birthday = birthday.replace(/-/g, "");
+            var num = birthday[0] * 1 + birthday[1] * 1 + birthday[2] * 1 + birthday[3] * 1 + birthday[4] * 1 + birthday[5] * 1 + birthday[6] * 1 + birthday[7] * 1;
+            var str = (num.toString()).substr(-1);
+            var img="images/" + str + ".jpg";
+            CavansDo(img,name)
+        }
+        function CavansDo(imgSrc,name){
+            var canv=document.getElementById("myCanvas");
+            var ctx = canv.getContext("2d");
+            img = new Image();
+            img.src = imgSrc;
+            img.onload=function(){
+                ctx.drawImage(img,0,0,img.width,img.height,0,0,w,h);
+                ctx.fillStyle = '#0a243a';
+                ctx.font=f+"px NSimSun";
+                ctx.fillText(name,l,t);
+            }
+
+        }
+    </script>
+    <style>
+        label{color:#0c4a82;}
+        .btn {
+            width: 99px;
+            height: 40px;
+            margin-left: 3px;
+            padding-left: 6px;
+            padding-right: 6px;
+            background: #0c4a82;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #fff;
+            font-family: "FangSong";
+            border: 1px white solid;
+
+        }
+
+        .content {
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            border: 0;
+        }
+        .content2{
+            margin-top: 30%;
+            margin-left: 70px;
+            text-align: left;
+        }
+
+        body {
+            background: url("images/bg.jpg") no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        input{
+            width:60%;
+            height: 20px;
+        }
+
+        label,span{
+        font-family: "FZShouJinShu-S10S";
+    }
+
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="content2">
+        <label for="name">姓名：</label>
+        <input id="name" value="" placeholder="请输入姓名"><br><br>
+        <label for="birthday" >生日：</label>
+        <input id="birthday" type="date" value="" placeholder="点击选择生日"><br><br>
+    </div>
+        <span class="btn" style="" onclick="submitClick()">生成</span>
+    <br>
+    <canvas id="myCanvas" width="360px"height="540px;"></canvas>
+
+</div>
+</body>
+</html>
